@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elliot Marsh — Designer</title>
+<meta name="description" content="Independent designer working at the edge of form and function.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  --white:   #faf9f7;
+  --off:     #f2f0ec;
+  --rule:    #e0ddd8;
+  --light:   #c8c4bc;
+  --mid:     #8a867e;
+  --ink:     #1c1a17;
+  --accent:  #1c1a17;
+
+  --serif:   'Playfair Display', Georgia, serif;
+  --sans:    'Lato', 'Helvetica Neue', sans-serif;
+
+  --max:     1320px;
+  --col:     680px;
+
+  /* spacing scale */
+  --s1:  8px;
+  --s2:  16px;
+  --s3:  24px;
+  --s4:  40px;
+  --s5:  64px;
+  --s6:  96px;
+  --s7:  140px;
+  --s8:  200px;
+  --s9:  280px;
+}
+
+/* ─────────────────────────────────────────
+   RESET
+───────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a  { color: inherit; text-decoration: none; }
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+.u-visually-hidden {
+  position: absolute; width:1px; height:1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
+}
+.u-rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ─────────────────────────────────────────
+   CURSOR
+───────────────────────────────────────── */
+body { cursor: crosshair; }
+a, button, [role="button"] { cursor: pointer; }
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s3) var(--s5);
+  /* glass — no JS */
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  background: rgba(250,249,247,0.82);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s;
+}
+.nav:hover { border-bottom-color: var(--rule); }
+
+.nav__logo {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  transition: opacity 0.25s;
+}
+.nav__logo:hover { opacity: 0.55; }
+
+.nav__links {
+  display: flex;
+  gap: var(--s5);
+  list-style: none;
+}
+.nav__links a {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav__links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.nav__links a:hover { color: var(--ink); }
+.nav__links a:hover::after { transform: scaleX(1); }
+
+.nav__cta {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mid);
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav__cta:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ─────────────────────────────────────────
+   HERO
+───────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  /* pin text to lower-left quadrant */
+  grid-template-rows: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 var(--s5);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.hero__eyebrow {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  padding-bottom: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+.hero__eyebrow-line {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.hero__eyebrow-line::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--light);
+  flex-shrink: 0;
+}
+
+.hero__headline {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  /* push left, vast right breathing room */
+  max-width: 72%;
+}
+.hero__h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.4rem, 7.2vw, 7.5rem);
+  font-weight: 400;
+  line-height: 1.01;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.hero__h1 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hero__footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-top: var(--s6);
+  padding-bottom: var(--s5);
+}
+.hero__desc {
+  max-width: 320px;
+  font-size: 0.875rem;
+  line-height: 1.85;
+  color: var(--mid);
+  font-weight: 300;
+}
+.hero__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s2);
+  color: var(--light);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.hero__scroll-track {
+  width: 1px;
+  height: 56px;
+  background: var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.hero__scroll-track::after {
+  content: '';
+  position: absolute;
+  top: -100%; left: 0;
+  width: 1px; height: 100%;
+  background: var(--ink);
+  animation: scrollTrack 2.2s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes scrollTrack {
+  0%   { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* hero index counter */
+.hero__index {
+  position: absolute;
+  top: 50%;
+  right: var(--s5);
+  transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: 0.6875rem;
+  color: var(--rule);
+  letter-spacing: 0.1em;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   SECTION WRAPPER
+───────────────────────────────────────── */
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--s5);
+}
+
+/* ─────────────────────────────────────────
+   SECTION HEADER
+───────────────────────────────────────── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--s7) 0 var(--s6);
+  border-top: 1px solid var(--rule);
+}
+.section-head__label {
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+.section-head__label::before {
+  content: attr(data-num);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--rule);
+}
+.section-head__title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.section-head__title em { font-style: italic; }
+
+/* ─────────────────────────────────────────
+   WORK GRID
+───────────────────────────────────────── */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+/* First item spans full width — hero work */
+.work-item:first-child {
+  grid-column: 1 / -1;
+}
+
+.work-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--off);
+  cursor: pointer;
+}
+
+/* The image placeholder / artwork area */
+.work-item__media {
+  position: relative;
+  overflow: hidden;
+}
+.work-item:first-child .work-item__media { aspect-ratio: 21/9; }
+.work-item__media { aspect-ratio: 4/3; }
+
+/* CSS-only artwork compositions (SVG-free, pure background magic) */
+.work-item__canvas {
+  width: 100%; height: 100%;
+  transition: transform 0.8s cubic-bezier(.2,0,.1,1), filter 0.5s;
+}
+.work-item:hover .work-item__canvas {
+  transform: scale(1.03);
+}
+
+/* Each project has a unique CSS art piece */
+.art--brand {
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 60%, #d4c5a9 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 75% 30%, #b8a88a 0%, transparent 55%),
+    linear-gradient(160deg, #1c1a17 0%, #3d3830 35%, #6b5f4e 65%, #c4b49a 100%);
+}
+.art--type {
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.06) 39px, rgba(255,255,255,.06) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,.04) 79px, rgba(255,255,255,.04) 80px),
+    linear-gradient(135deg, #2a2420 0%, #4a3f35 40%, #8c7a68 80%, #c8b8a0 100%);
+}
+.art--space {
+  background:
+    radial-gradient(circle at 20% 80%, #e8e0d0 0%, transparent 45%),
+    radial-gradient(circle at 80% 20%, #d0c8b8 0%, transparent 45%),
+    linear-gradient(to bottom right, #f0ece4, #c8bfb0);
+}
+.art--motion {
+  background:
+    repeating-linear-gradient(-45deg,
+      transparent 0px, transparent 18px,
+      rgba(28,26,23,0.04) 18px, rgba(28,26,23,0.04) 19px
+    ),
+    linear-gradient(120deg, #1c1a17 0%, #2e2923 50%, #5a5040 100%);
+}
+.art--editorial {
+  background:
+    linear-gradient(to right, #1c1a17 0%, #1c1a17 45%, transparent 45%),
+    linear-gradient(to bottom, #f2f0ec 0%, #e0ddd8 100%);
+}
+.art--identity {
+  background:
+    conic-gradient(from 0deg at 50% 50%,
+      #c8b090 0deg, #e8d8c0 72deg,
+      #a89070 144deg, #d8c8a8 216deg,
+      #c0a880 288deg, #c8b090 360deg
+    );
+  filter: saturate(0.7) brightness(1.05);
+}
+
+/* ── OVERLAY ── */
+.work-item__overlay {
+  position: absolute; inset: 0;
+  background: rgba(250,249,247,0);
+  transition: background 0.4s;
+  pointer-events: none;
+}
+.work-item:hover .work-item__overlay {
+  background: rgba(250,249,247,0.06);
+}
+
+/* ── WORK INFO ── */
+.work-item__info {
+  padding: var(--s3) var(--s4) var(--s4);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--rule);
+}
+.work-item__meta { display: flex; flex-direction: column; gap: var(--s1); }
+.work-item__title {
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: opacity 0.2s;
+}
+.work-item:hover .work-item__title { opacity: 0.6; }
+.work-item__category {
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.work-item__year {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--rule);
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.work-item:hover .work-item__year { color: var(--light); }
+
+/* arrow glyph */
+.work-item__arrow {
+  position: absolute;
+  top: var(--s3); right: var(--s3);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  color: transparent;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+}
+.work-item:hover .work-item__arrow {
+  border-color: rgba(28,26,23,0.15);
+  color: var(--ink);
+  transform: rotate(45deg);
+}
+
+/* ─────────────────────────────────────────
+   ABOUT STRIP
+───────────────────────────────────────── */
+.about {
+  padding: var(--s8) 0 var(--s9);
+  display: grid;
+  grid-template-columns: 1fr var(--col);
+  gap: var(--s6);
+  align-items: start;
+}
+.about__label-col {
+  padding-top: 0.38em; /* optical baseline align */
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.about__vertical {
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  align-self: flex-start;
+}
+.about__num {
+  font-family: var(--serif);
+  font-size: 4.5rem;
+  font-weight: 400;
+  color: var(--rule);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  align-self: flex-end;
+}
+.about__body { display: flex; flex-direction: column; gap: var(--s5); }
+.about__heading {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.about__heading em { font-style: italic; }
+.about__text {
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 520px;
+}
+.about__text + .about__text { margin-top: calc(-1 * var(--s3)); }
+.about__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--rule);
+  width: fit-content;
+  transition: border-color 0.25s, gap 0.25s;
+}
+.about__link:hover { border-color: var(--ink); gap: var(--s3); }
+.about__link::after {
+  content: '→';
+  font-size: 0.75rem;
+}
+
+/* ─────────────────────────────────────────
+   CAPABILITIES / SERVICES
+───────────────────────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+  margin-bottom: var(--s9);
+}
+.service-cell {
+  padding: var(--s5) var(--s4) var(--s6);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  transition: background 0.3s;
+}
+.service-cell:hover { background: var(--off); }
+.service-cell__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.6875rem;
+  color: var(--rule);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--s5);
+  display: block;
+  transition: color 0.3s;
+}
+.service-cell:hover .service-cell__num { color: var(--light); }
+.service-cell__title {
+  font-family: var(--serif);
+  font-size: 1.3125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: var(--s3);
+  line-height: 1.2;
+}
+.service-cell__title em { font-style: italic; }
+.service-cell__body {
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: var(--mid);
+  font-weight: 300;
+}
+
+/* ─────────────────────────────────────────
+   SELECTED CLIENTS  
+   (pure CSS marquee — no JS)
+───────────────────────────────────────── */
+.clients-band {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: var(--s4) 0;
+  margin-bottom: var(--s9);
+  overflow: hidden;
+}
+.clients-track {
+  display: flex;
+  gap: var(--s6);
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.clients-band:hover .clients-track { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.clients-item {
+  font-size: 0.625rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rule);
+  white-space: nowrap;
+  transition: color 0.25s;
+  flex-shrink: 0;
+}
+.clients-item:hover { color: var(--light); }
+.clients-sep {
+  color: var(--rule);
+  font-size: 0.4375rem;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   PROCESS — numbered accordion (CSS only)
+───────────────────────────────────────── */
+.process-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+  margin-bottom: var(--s9);
+}
+.process-item {
+  border-bottom: 1px solid var(--rule);
+}
+.process-item__toggle {
+  display: none; /* checkbox hack */
+}
+.process-item__label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--s4) 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  user-select: none;
+}
+.process-item__label:hover { opacity: 0.7; }
+.process-item__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s4);
+}
+.process-item__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.6875rem;
+  color: var(--rule);
+  letter-spacing: 0.1em;
+  min-width: 1.8rem;
+}
+.process-item__name {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.process-item__name em { font-style: italic; }
+.process-item__icon {
+  font-size: 0.875rem;
+  color: var(--light);
+  transform: rotate(0deg);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), color 0.2s;
+  line-height: 1;
+}
+.process-item__toggle:checked + .process-item__label .process-item__icon {
+  transform: rotate(45deg);
+  color: var(--ink);
+}
+.process-item__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(.4,0,.2,1);
+}
+.process-item__toggle:checked ~ .process-item__body {
+  max-height: 240px;
+}
+.process-item__body-inner {
+  padding: 0 0 var(--s5) calc(1.8rem + var(--s4));
+  font-size: 0.875rem;
+  line-height: 1.85;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 560px;
+}
+
+/* ─────────────────────────────────────────
+   TESTIMONIALS — CSS snap scroll
+───────────────────────────────────────── */
+.testimonials {
+  margin-bottom: var(--s9);
+}
+.testimonials__track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s4);
+}
+.testimonial-card {
+  padding: var(--s5) var(--s4) var(--s5);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: var(--light); }
+.testimonial-card__quote {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink);
+  letter-spacing: -0.008em;
+}
+.testimonial-card__mark {
+  font-family: var(--serif);
+  font-size: 3rem;
+  color: var(--rule);
+  line-height: 1;
+  align-self: flex-start;
+  margin-bottom: calc(-1 * var(--s2));
+}
+.testimonial-card__author {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: auto;
+}
+.testimonial-card__name {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.testimonial-card__role {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+/* ─────────────────────────────────────────
+   CONTACT CTA
+───────────────────────────────────────── */
+.cta-block {
+  padding: var(--s8) 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--s6);
+  margin-bottom: var(--s7);
+}
+.cta-block__heading {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5.6vw, 6rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  max-width: 780px;
+}
+.cta-block__heading em { font-style: italic; }
+.cta-block__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--s3);
+  padding-bottom: 0.3em; /* optical */
+}
+.cta-block__aside-label {
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+.cta-block__email {
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-style: italic;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3px;
+  transition: border-color 0.25s;
+}
+.cta-block__email:hover { border-color: var(--ink); }
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: var(--s4) 0 var(--s5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+}
+.footer__copy {
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rule);
+}
+.footer__links {
+  display: flex;
+  gap: var(--s4);
+  list-style: none;
+}
+.footer__links a {
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  transition: color 0.2s;
+}
+.footer__links a:hover { color: var(--ink); }
+.footer__tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--rule);
+}
+
+/* ─────────────────────────────────────────
+   FADE-IN — CSS scroll-driven (progressive)
+───────────────────────────────────────── */
+@supports (animation-timeline: scroll()) {
+  .fade-up {
+    animation: fadeUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 22%;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(18px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+}
+
+/* fallback — just show everything */
+@supports not (animation-timeline: scroll()) {
+  .fade-up { opacity:1; }
+}
+
+/* stagger children */
+.work-item:nth-child(1) { animation-delay: 0s; }
+.work-item:nth-child(2) { animation-delay: .06s; }
+.work-item:nth-child(3) { animation-delay: .12s; }
+.work-item:nth-child(4) { animation-delay: .18s; }
+.work-item:nth-child(5) { animation-delay: .24s; }
+.work-item:nth-child(6) { animation-delay: .30s; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 960px) {
+  :root {
+    --s5: 40px;
+    --s6: 72px;
+    --s7: 96px;
+    --s8: 140px;
+    --s9: 180px;
+  }
+  .nav { padding: var(--s2) var(--s4); }
+  .nav__links { gap: var(--s4); }
+  .hero { grid-template-columns: 1fr; padding: 0 var(--s4); }
+  .hero__headline { max-width: 100%; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work-item:first-child { grid-column: auto; }
+  .work-item:first-child .work-item__media { aspect-ratio: 16/9; }
+  .about { grid-template-columns: 1fr; }
+  .about__label-col { flex-direction: row; align-items: center; }
+  .about__vertical { writing-mode: horizontal-tb; transform: none; }
+  .about__num { font-size: 3rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .cta-block { grid-template-columns: 1fr; }
+  .cta-block__aside { align-items: flex-start; }
+  .testimonials__track { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; align-items: flex-start; gap: var(--s2); }
+}
+
+@media (max-width: 600px) {
+  .nav__links { display: none; }
+  .hero__footer { flex-direction: column; gap: var(--s4); }
+  .section-head { flex-direction: column; gap: var(--s2); }
+}
+
+/* ─────────────────────────────────────────
+   PRINT (bonus)
+───────────────────────────────────────── */
+@media print {
+  .nav, .hero__scroll, .clients-band { display: none; }
+  .hero { min-height: auto; padding-top: var(--s5); }
+  body { font-size: 11pt; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════
+     NAV
+══════════════════════════════════════ -->
+<nav class="nav" role="navigation" aria-label="Main">
+  <a href="#" class="nav__logo">Elliot Marsh</a>
+  <ul class="nav__links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:hello@elliotmarsh.co" class="nav__cta">Available for work</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero__eyebrow">
+    <span class="hero__eyebrow-line">Independent designer</span>
+    <span class="hero__eyebrow-line">Based in Amsterdam</span>
+  </div>
+
+  <div class="hero__headline">
+    <h1 class="hero__h1">
+      Craft at the<br>
+      edge of <em>form</em><br>
+      &amp;&thinsp;function.
+    </h1>
+  </div>
+
+  <div class="hero__footer">
+    <p class="hero__desc">
+      I work with founders and creative directors
+      to build identities, interfaces and printed
+      matter that endure. Twelve years. Six disciplines.
+      One standard.
+    </p>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="hero__scroll-track"></div>
+    </div>
+  </div>
+
+  <span class="hero__index" aria-hidden="true">01 / 06</span>
+</section>
+
+<!-- ══════════════════════════════════════
+     WORK
+══════════════════════════════════════ -->
+<section class="section" id="work" aria-label="Selected work">
+  <div class="section-head fade-up">
+    <span class="section-head__label" data-num="01">Selected work</span>
+    <h2 class="section-head__title">Recent <em>projects</em></h2>
+  </div>
+
+  <div class="work-grid" role="list">
+
+    <!-- 01 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--brand"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Forma — Brand Identity</h3>
+          <span class="work-item__category">Identity &middot; Print &middot; Digital</span>
+        </div>
+        <span class="work-item__year">2024</span>
+      </div>
+    </article>
+
+    <!-- 02 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--type"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Meridian — Type System</h3>
+          <span class="work-item__category">Typography &middot; Variable Font</span>
+        </div>
+        <span class="work-item__year">2024</span>
+      </div>
+    </article>
+
+    <!-- 03 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--space"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Atelier Blanc — Exhibition</h3>
+          <span class="work-item__category">Exhibition &middot; Spatial &middot; Print</span>
+        </div>
+        <span class="work-item__year">2023</span>
+      </div>
+    </article>
+
+    <!-- 04 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--motion"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Lumen — Motion Language</h3>
+          <span class="work-item__category">Motion &middot; Digital &middot; UI</span>
+        </div>
+        <span class="work-item__year">2023</span>
+      </div>
+    </article>
+
+    <!-- 05 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--editorial"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Revue — Editorial Design</h3>
+          <span class="work-item__category">Editorial &middot; Print &middot; Direction</span>
+        </div>
+        <span class="work-item__year">2022</span>
+      </div>
+    </article>
+
+    <!-- 06 -->
+    <article class="work-item fade-up" role="listitem">
+      <div class="work-item__media">
+        <div class="work-item__canvas art--identity"></div>
+        <div class="work-item__overlay"></div>
+        <span class="work-item__arrow" aria-hidden="true">↗</span>
+      </div>
+      <div class="work-item__info">
+        <div class="work-item__meta">
+          <h3 class="work-item__title">Crest — Visual Identity</h3>
+          <span class="work-item__category">Identity &middot; Packaging</span>
+        </div>
+        <span class="work-item__year">2022</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CLIENTS MARQUEE
+══════════════════════════════════════ -->
+<div class="clients-band" aria-label="Selected clients" role="marquee">
+  <div class="clients-track" aria-hidden="true">
+    <!-- first set -->
+    <span class="clients-item">Kinfolk</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Wallpaper*</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Aesop</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Monocle</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Céline</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Analogue</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Sonos</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Another Escape</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Neutral Works</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Offscreen</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Matter</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Frame Publishers</span><span class="clients-sep">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="clients-item">Kinfolk</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Wallpaper*</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Aesop</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Monocle</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Céline</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Analogue</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Sonos</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Another Escape</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Neutral Works</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Offscreen</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Matter</span><span class="clients-sep">✦</span>
+    <span class="clients-item">Frame Publishers</span><span class="clients-sep">✦</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
+<section class="section" id="about" aria-label="About">
+  <div class="about fade-up">
+    <div class="about__label-col">
+      <span class="about__vertical">02 — About</span>
+      <span class="about__num" aria-hidden="true">12</span>
+    </div>
+    <div class="about__body">
+      <h2 class="about__heading">
+        Design that<br>
+        holds its <em>ground.</em>
+      </h2>
+      <p class="about__text">
+        Twelve years building visual languages for brands
+        that want to last. I work across identity, type,
+        editorial and interface — not because I can't
+        specialise, but because the best work lives in
+        the space between disciplines.
+      </p>
+      <p class="about__text">
+        Before going independent I led design at Bureau
+        Grotesque in Copenhagen and was senior art
+        director at The Gourmand in London. I hold an MA
+        in Communication Design from the RCA.
+      </p>
+      <a href="#contact" class="about__link">Start a conversation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SERVICES
+══════════════════════════════════════ -->
+<section class="section" aria-label="Services">
+  <div class="section-head fade-up">
+    <span class="section-head__label" data-num="03">What I do</span>
+    <h2 class="section-head__title"><em>Capabilities</em></h2>
+  </div>
+
+  <div class="services-grid fade-up">
+    <div class="service-cell">
+      <span class="service-cell__num">01</span>
+      <h3 class="service-cell__title">Brand <em>Identity</em></h3>
+      <p class="service-cell__body">
+        Strategy, naming, mark-making, colour,
+        typography and the full suite of brand
+        guidelines. Systems built to flex without
+        breaking.
+      </p>
+    </div>
+    <div class="service-cell">
+      <span class="service-cell__num">02</span>
+      <h3 class="service-cell__title"><em>Editorial</em> Design</h3>
+      <p class="service-cell__body">
+        Magazine, book and catalogue design.
+        From concept through to press-ready
+        PDFs. Long-form reading as craft.
+      </p>
+    </div>
+    <div class="service-cell">
+      <span class="service-cell__num">03</span>
+      <h3 class="service-cell__title">Type <em>Direction</em></h3>
+      <p class="service-cell__body">
+        Bespoke type selection, pairing strategy,
+        and custom lettering for brands that
+        need a voice only they can own.
+      </p>
+    </div>
+    <div class="service-cell">
+      <span class="service-cell__num">04</span>
+      <h3 class="service-cell__title"><em>Interface</em> Design</h3>
+      <p class="service-cell__body">
+        UI design, design systems and component
+        libraries. Pixel-perfect handoff for
+        development teams that care.
+      </p>
+    </div>
+    <div class="service-cell">
+      <span class="service-cell__num">05</span>
+      <h3 class="service-cell__title">Art <em>Direction</em></h3>
+      <p class="service-cell__body">
+        Photography, illustration and motion
+        art direction. Translating brand intent
+        into images that stop the scroll.
+      </p>
+    </div>
+    <div class="service-cell">
+      <span class="service-cell__num">06</span>
+      <h3 class="service-cell__title"><em>Spatial</em> Design</h3>
+      <p class="service-cell__body">
+        Exhibition graphics, wayfinding and
+        environmental design. The brand extended
+        into three dimensions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROCESS (CSS-only accordion)
+══════════════════════════════════════ -->
+<section class="section" id="process" aria-label="Process">
+  <div class="section-head fade-up">
+    <span class="section-head__label" data-num="04">How I work</span>
+    <h2 class="section-head__title">The <em>process</em></h2>
+  </div>
+
+  <div class="process-list fade-up">
+
+    <div class="process-item">
+      <input type="checkbox" id="p1" class="process-item__toggle" aria-label="Expand Discovery">
+      <label class="process-item__label" for="p1">
+        <div class="process-item__header">
+          <span class="process-item__num">01</span>
+          <span class="process-item__name"><em>Discovery</em> &amp; framing</span>
+        </div>
+        <span class="process-item__icon" aria-hidden="true">+</span>
+      </label>
+      <div class="process-item__body">
+        <div class="process-item__body-inner">
+          Every engagement begins with a listening phase.
+          Two to four hours of structured conversation to
+          understand the business, its audience, its
+          competitive context and the gap between where
+          it is and where it wants to be.
+        </div>
+      </div>
+    </div>
+
+    <div class="process-item">
+      <input type="checkbox" id="p2" class="process-item__toggle" aria-label="Expand Strategy">
+      <label class="process-item__label" for="p2">
+        <div class="process-item__header">
+          <span class="process-item__num">02</span>
+          <span class="process-item__name">Strategic <em>positioning</em></span>
+        </div>
+        <span class="process-item__icon" aria-hidden="true">+</span>
+      </label>
+      <div class="process-item__body">
+        <div class="process-item__body-inner">
+          A written positioning document delivered
+          before any visual work begins. This becomes
+          the brief, the filter and the north star
+          for every decision that follows.
+        </div>
+      </div>
+    </div>
+
+    <div class="process-item">
+      <input type="checkbox" id="p3" class="process-item__toggle" aria-label="Expand Design">
+      <label class="process-item__label" for="p3">
+        <div class="process-item__header">
+          <span class="process-item__num">03</span>
+          <span class="process-item__name"><em>Design</em> &amp; iteration</span>
+        </div>
+        <span class="process-item__icon" aria-hidden="true">+</span>
+      </label>
+      <div class="process-item__body">
+        <div class="process-item__body-inner">
+          One considered direction, not three half-baked
+          ones. I present fully realised work at each
+          stage with a clear rationale, then refine in
+          two focused rounds of feedback.
+        </div>
+      </div>
+    </div>
+
+    <div class="process-item">
+      <input type="checkbox" id="p4" class="process-item__toggle" aria-label="Expand Delivery">
+      <label class="process-item__label" for="p4">
+        <div class="process-item__header">
+          <span class="process-item__num">04</span>
+          <span class="process-item__name">Delivery &amp; <em>handoff</em></span>
+        </div>
+        <span class="process-item__icon" aria-hidden="true">+</span>
+      </label>
+      <div class="process-item__body">
+        <div class="process-item__body-inner">
+          Comprehensive brand guidelines, all production
+          files in open formats and a recorded walkthrough
+          so your team can operate the system independently
+          from day one.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════ -->
+<section class="section" aria-label="Testimonials">
+  <div class="section-head fade-up">
+    <span class="section-head__label" data-num="05">Clients say</span>
+    <h2 class="section-head__title"><em>Words</em></h2>
+  </div>
+
+  <div class="testimonials fade-up">
+    <div class="testimonials__track">
+
+      <blockquote class="testimonial-card">
+        <div class="testimonial-card__mark" aria-hidden="true">"</div>
+        <p class="testimonial-card__quote">
+          Elliot has a rare gift for distilling
+          something complex into a mark you feel
+          immediately. The Forma identity has
+          aged three years perfectly.
+        </p>
+        <footer class="testimonial-card__author">
+          <cite class="testimonial-card__name">Nora Steinberg</cite>
+          <span class="testimonial-card__role">Founder, Forma Studio</span>
+        </footer>
+      </blockquote>
+
+      <blockquote class="testimonial-card">
+        <div class="testimonial-card__mark" aria-hidden="true">"</div>
+        <p class="testimonial-card__quote">
+          Working with Elliot felt like collaborating
+          with someone who had already read the brief
+          we hadn't written yet. Precise, patient
+          and profoundly tasteful.
+        </p>
+        <footer class="testimonial-card__author">
+          <cite class="testimonial-card__name">James Willoughby</cite>
+          <span class="testimonial-card__role">Creative Director, Monocle</span>
+        </footer>
+      </blockquote>
+
+      <blockquote class="testimonial-card">
+        <div class="testimonial-card__mark" aria-hidden="true">"</div>
+        <p class="testimonial-card__quote">
+          The type system Elliot built for Meridian
+          became the backbone of our entire visual
+          output. It has done more for our brand
+          recognition than anything else we've made.
+        </p>
+        <footer class="testimonial-card__author">
+          <cite class="testimonial-card__name">Linh Tran</cite>
+          <span class="testimonial-card__role">Publisher, Offscreen Magazine</span>
+        </footer>
+      </blockquote>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT CTA
+══════════════════════════════════════ -->
+<section class="section" id="contact" aria-label="Contact">
+  <div class="cta-block fade-up">
+    <h2 class="cta-block__heading">
+      Let's make<br>
+      something <em>worth</em><br>
+      keeping.
+    </h2>
+    <div class="cta-block__aside">
+      <span class="cta-block__aside-label">Get in touch</span>
+      <a href="mailto:hello@elliotmarsh.co" class="cta-block__email">
+        hello@elliotmarsh.co
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="section" role="contentinfo">
+  <div class="footer">
+    <span class="footer__copy">© 2024 Elliot Marsh — All rights reserved</span>
+    <ul class="footer__links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Are.na</a></li>
+      <li><a href="#">CV</a></li>
+    </ul>
+    <span class="footer__tagline">Amsterdam&thinsp;/&thinsp;Remote</span>
+  </div>
+</footer>
+
+<!-- zero JS. zero runtime. only craft. -->
+</body>
+</html>
